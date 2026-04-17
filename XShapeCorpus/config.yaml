@@ -1,0 +1,28 @@
+COMPLEX_SHAPE_GEN:
+  pose_gen_translate_range: [-100, 100]
+  pose_scale_range: [1.5, 100.0]
+  canvas_size: 256
+  shape_mask_resolution: 300
+  shape_save_dir: 'shape_corpus'
+  op_num: 15
+  shape_num: 100
+  translate_range: [-100, 100]
+  rotate_range: [-180, 180]
+  scale_range: [0.1, 10.0]
+  depth_range: [1, 2, 3, 4, 5]
+  shape_num_each_depth: [100, 100, 100, 100, 100]
+  random_seed_id: 42
+  # NEW (unit-frame) — small steps/jitters while constructing geometry
+  unit_jitter_translate_range: [-0.1, 0.1]      # used in _rand_primitive_unit()
+  unit_jitter_rotate_range: [-45, 45]
+  unit_jitter_scale_range: [0.8, 1.2]
+
+  unit_step_translate_range: [-0.08, 0.08]      # used during 'unary' steps in create_shapes()
+  unit_step_rotate_range: [-30, 30]
+  unit_step_scale_range: [0.9, 1.1]
+
+  # Optional “composition constraints” (advanced)
+  change_ratio_range: [0.12, 0.55]              # symmetric-diff ratio bounds
+  overlap_ratio_range: [0.25, 0.70]             # partner overlap ratio wrt current
+  partner_area_frac_range: [0.25, 0.55]         # partner area fraction wrt current
+  destructive_min_area_frac: 0.6
