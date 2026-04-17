@@ -51,7 +51,7 @@ enjoying the advantage of controllable emphasis between shape geometry and shape
 
 ### XShapeEnc Pipeline
 
- <p align="center"><a href="./"><img src=./imgs/XShapeEnc_pipeline_vis.jpg width="70%"></a></p>
+ <p align="center"><a href="./"><img src=./imgs/XShapeEnc_pipeline_vis.jpg width="95%"></a></p>
 
  XShapeEnc encoding pipeline is shown in the Figure above. It can independently encode shape geometry, shape pose or geometry-pose jointly. The whole encoding framework is based on Zernike basis. The shape pose requires to be first converted into harmonic pose field so as to be encodable by Zernike basis.
 
@@ -59,7 +59,7 @@ enjoying the advantage of controllable emphasis between shape geometry and shape
 
 1. Inter-Shape Polygon-Polygon Topological Relation Classification
 
-   <p align="center"><a href="./"><img src=./imgs/topo_rel_vis.jpg width="70%"></a></p>
+   <p align="center"><a href="./"><img src=./imgs/topo_rel_vis.jpg width="95%"></a></p>
 
     We run experiment on spatially grounded polygon pair topological relation classification. As shown in the figure above, we classify 5 main relations: Disjoint, Within, Overlap, Touch and Equal. The polygon shapes are from Singapore and New York building 
     bird-eye-view (BEV) map. The result is shown in the table below,
@@ -80,13 +80,13 @@ enjoying the advantage of controllable emphasis between shape geometry and shape
 
 2. Invertibility Visualization
 
-    <p align="center"><a href="./"><img src=./imgs/XShapeEnc_invert.jpg width="70%"></a></p>
+    <p align="center"><a href="./"><img src=./imgs/XShapeEnc_invert.jpg width="95%"></a></p>
 
     We test XShapeEnc's invertibility property by running encoding-to-shape inversion from various commonly used encodng length: 64, 128, 256, 512, 1024, 2048, 4096. The result is shown in the Figure above, from which we can observe that larger encoding length leads to higher-fielity shape recovery.
 
 3. Shape Geometry Clustering Visualization
 
-    <p align="center"><a href="./"><img src=./imgs/XShapeEnc_cluster.jpg width="70%"></a></p>
+    <p align="center"><a href="./"><img src=./imgs/XShapeEnc_cluster.jpg width="95%"></a></p>
 
     We test XShapeEnc's shape geometry encoding inter- and intra- shape discriminability by running t-SNE clustering on augmented 4 complex shapes. As shown in the figure above, XShapeEnc maintains the discriminability while most of the comparing baselines loosing such discriminability.
 
