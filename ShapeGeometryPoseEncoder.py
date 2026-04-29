@@ -63,7 +63,7 @@ class ShapeGeometryPoseEncoder:
             pose_encoder = pose_encoder_dict['pose_encoder']
             m_p = pose_encoder_dict['m_p']
 
-            pose_encde_coeffs = pose_encoder.encode(pose_vec, just_coeffs=True)
+            pose_encde_coeffs = pose_encoder.encode(pose_vec, just_return_coeff=True)
             pose_encoded_rst.append((m_p, pose_encde_coeffs))
 
         for (m_p, pose_encde_coeffs) in pose_encoded_rst:

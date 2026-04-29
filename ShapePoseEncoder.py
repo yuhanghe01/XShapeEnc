@@ -150,7 +150,7 @@ class ShapePoseEncoder:
 
         return p_recovered
     
-    def encode(self, p_vec, just_return_encode=False):
+    def encode(self, p_vec, just_return_coeff=False):
         # pos_vec can be either a list or a numpy array, but it can just handle one pose vector at a time
         assert len(p_vec) == self.K, "Pose vector length must match number of radial windows K."
         radial_part = np.sum([p*w for p, w in zip(p_vec, self.windows)], axis=0)  # Shape: [res, res]
@@ -163,7 +163,7 @@ class ShapePoseEncoder:
             norm = trapezoid(trapezoid(Znm * Znm * self.r, self.rho, axis=1), self.theta, axis=0) + 1e-12
             coeffs.append(float(val / norm))
 
-        if just_return_encode:
+        if just_return_coeff:
             return coeffs
         else:
             p_recovered = self.inverse_pose_encoding(coeffs)
