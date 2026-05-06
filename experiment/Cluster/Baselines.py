@@ -424,57 +424,6 @@ class Baseline:
         return final_feature_vector.tolist()
 
     @staticmethod
-    def reconstruct_shape_from_efd(efd_vector: np.ndarray, num_points: int, image_size: tuple = (100, 100), threshold: float = 0.5) -> np.ndarray:
-        """
-        Reconstructs the original shape mask from a flattened EFD feature vector.
-        NOTE: Assumes a SINGLE contour was encoded.
-        """
-        num_harmonics = efd_vector.shape[0] // 4
-        efds = efd_vector.reshape(num_harmonics, 4)
-
-        A0, C0 = image_size[0] // 2, image_size[1] // 2
-        T = 1.0
-
-        t = np.linspace(0, T, num_points, endpoint=False)
-        x_coords = np.full(num_points, A0, dtype=np.float64)
-        y_coords = np.full(num_points, C0, dtype=np.float64)
-
-        omega = 2 * np.pi / T
-
-        for n in range(1, num_harmonics + 1):
-            a_n, b_n, c_n, d_n = efds[n-1, :]
-            x_coords += (a_n * np.cos(n * omega * t) + b_n * np.sin(n * omega * t))
-            y_coords += (c_n * np.cos(n * omega * t) + d_n * np.sin(n * omega * t))
-
-        reconstructed_contour = np.vstack((x_coords, y_coords)).T.astype(np.int32)
-
-        reconstructed_mask = np.zeros(image_size, dtype=np.uint8)
-        cv2.fillPoly(reconstructed_mask, [reconstructed_contour], 255)
-
-        return reconstructed_mask
-
-    @staticmethod
-    def eft_encode_shape_v2(binary_mask: np.ndarray, encode_len: int) -> list:
-        """
-        Encodes shape without normalization, returning raw EFD coefficients as a list.
-        """
-        if binary_mask.dtype != np.uint8:
-            binary_mask = (binary_mask * 255).astype(np.uint8)
-
-        contours, hierarchy = cv2.findContours(binary_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-        if not contours:
-            return []
-
-        main_contour = max(contours, key=cv2.contourArea)
-
-        if len(main_contour) <= encode_len * 4:
-            return []
-
-        efds = elliptic_fourier_descriptors(main_contour.reshape(-1, 2), order=encode_len, normalize=False)
-
-        return efds.flatten().tolist()
-
-    @staticmethod
     def regular_grid_point_encoding(mask, encode_len: int) -> list:
         """
         Sample points regularly on the shape mask and encode their coordinates.
