@@ -10,6 +10,81 @@
 [Yuhang He](https://yuhanghe01.github.io/)<br>
 Microsoft Research
 
+
+
+### Usage from PyPI
+
+1. Install the package from PyPI:
+
+    ```bash
+    pip install xshapeenc
+    ```
+
+2. Shape Geometry Encoding: Encodes a 2-D shape mask into a fixed-length Zernike coefficient vector that captures the shape's geometry. 
+
+    ```python
+    import numpy as np
+    import xshapeenc
+
+    # Build a simple circular mask in polar coordinates (res × res)
+    res = 300
+    rho   = np.linspace(0, 1, res)
+    theta = np.linspace(0, 2 * np.pi, res)
+    r, t  = np.meshgrid(rho, theta)
+    circle_mask = (r <= 1.0).astype(np.float64)
+
+    # Encode – returns a list of `encode_len` floats
+    geo_vec = xshapeenc.encode_geometry(circle_mask, n_max=5, res=res, lam=0.6, encode_len=512)
+    print(f"Geometry encoding length: {len(geo_vec)}")  # 512
+
+    # Decode back to a mask and measure reconstruction error
+    encoder = xshapeenc.ShapeGeometryEncoder(n_max=5, res=res, lam=0.6, encode_len=512)
+    recon   = encoder.decode(encoder.encode(circle_mask))
+    mse     = float(np.mean((circle_mask - recon) ** 2))
+    print(f"Reconstruction MSE: {mse:.6f}")
+    ```
+
+    If your mask is a regular Euclidean image (e.g. loaded from a PNG), pass `mask_in_euclidean=True` and the library handles the polar re-sampling automatically:
+
+    ```python
+    from PIL import Image
+    import numpy as np
+    import xshapeenc
+
+    img  = np.array(Image.open("my_shape.png").convert("L")) / 255.0  # H × W float
+    vec  = xshapeenc.encode_geometry(img, encode_len=512, mask_in_euclidean=True)
+    ```
+
+3. Pose encoding: Encodes a 1-D spatial pose vector (e.g. x/y coordinates, scale, orientation) into a set of Zernike radial coefficients.
+
+    ```python
+    import xshapeenc
+
+    pose_vec   = [0.2, 0.5, 0.7, 0.9, 0.4]   # arbitrary length
+    pose_coeffs = xshapeenc.encode_pose(pose_vec, encode_len=128)
+    print(f"Pose encoding length: {len(pose_coeffs)}")  # 128
+    ```
+
+4. Joint geometry-pose encoding: Fuses shape geometry and spatial pose into a single vector. The `beta` parameter controls the emphasis:
+    - `beta=0` → pure pose
+    - `beta=1` → equal weight (default)
+    - `beta=2` → pure geometry
+
+    ```python
+    import numpy as np
+    import xshapeenc
+
+    res = 300
+    rho   = np.linspace(0, 1, res)
+    theta = np.linspace(0, 2 * np.pi, res)
+    r, _  = np.meshgrid(rho, theta)
+    circle_mask = (r <= 1.0).astype(np.float64)
+
+    pose_vec  = [0.2, 0.5, 0.7, 0.9, 0.4]
+    joint_vec = xshapeenc.encode_geopose(circle_mask, pose_vec, encode_len=512, beta=1.0)
+    print(f"Joint encoding length: {len(joint_vec)}")  # 512
+    ```
+
 ### Quick Test
 
 1. To build up the environment `pip install requirements.txt`.
