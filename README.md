@@ -17,10 +17,10 @@ Microsoft Research
 2. Run `quick_test.py` to experience shape geometry encoding, shape pose encoding and their joint encoding.
 
     ```python
-    if __name__ == "__main__":
-        test_pose_encoder()
-        test_geometry_encoder()
-        test_geometry_pose_encoder()
+    #Run all tests::
+    python quick_test.py
+    #Run a specific subset with debug output::
+    python quick_test.py --tests pose geometry --verbose
     ```
 
 3. XShapeCorpus dataset generation, go to [README.md](./XShapeCorpus/README.md).
