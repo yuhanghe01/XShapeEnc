@@ -78,7 +78,7 @@ class ShapeGeometryEncoder:
         if mask_in_euclidean:
             shape_mask = MaskConvert.euclidean_mask_to_polar(shape_mask, 
                                                              theta_resolution=self.res, 
-                                                             rho_resolution=self.res)
+                                                             rho_resolution=self.res)[2]
         raw_complex, freqprop_coeff_complex = self.zernike_corpus.encode(shape_mask, lam=self.lam, return_raw=True)
         real_coeffs = self.get_real_compact_coeffs(freqprop_coeff_complex)
 
