@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/github/stars/yuhanghe01/XShapeEnc" alt="GitHub stars">
 </p>
 
-## Training-free Spatially Grounded Geometric Shape Encoding (Technical Report)
+## Training-free Spatially Grounded Geometric Shape Encoding (NeurIPS26)
 
 [Yuhang He](https://yuhanghe01.github.io/)<br>
 Microsoft Research
@@ -169,6 +169,12 @@ enjoying the advantage of controllable emphasis between shape geometry and shape
 ### Cite XShapeEnc
 
 ```bibtex
+@inproceedings{yuhheXShapeEncNeurIPS,
+title={Training-free Spatially Grounded Geometric Shape Encoding},
+author={He, Yuhang},
+booktitle={Annual Conference on Neural Information Processing Systems~(NeurIPS)},
+year={2026}}
+
 @inproceedings{yuhheXShapeEnc2026,
 title={Training-free Spatially Grounded Geometric Shape Encoding (Technical Report)},
 author={He, Yuhang},
